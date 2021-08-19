@@ -92,5 +92,9 @@
 
 </ul>
 
+<form action="register">
+    <button>Register</button>
+</form>
+
 </body>
 </html>
