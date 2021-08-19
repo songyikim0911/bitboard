@@ -12,6 +12,19 @@
     <title>Title</title>
 </head>
 <body>
+
+<script>
+
+    let num = '${param.bno}'
+
+    if(num){
+        alert(num)
+        window.history.replaceState(null, '', 'board/list');
+    }
+
+</script>
+
+
 <h1>List Page</h1>
 
 <h4>${pageMaker}</h4>

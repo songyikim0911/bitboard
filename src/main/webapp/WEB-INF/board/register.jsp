@@ -11,6 +11,8 @@
     <title>Title</title>
 </head>
 <body>
+
+
     <form action ="/board/register" method="post">
         <input type="text" name="title" value="샘플제목">
         <textarea name="content"> 샘플 내용</textarea>

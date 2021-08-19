@@ -19,7 +19,7 @@
     </select>
 
     <select id="list" resultType="org.zerock.bitboard.dto.BoardDTO">
-        select * from board order by bno > 0 limit #{skip}, #{size}
+        select * from board where bno >0 order by bno desc limit #{skip}, #{size}
     </select>
 
 
