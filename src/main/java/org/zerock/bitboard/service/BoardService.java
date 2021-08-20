@@ -37,6 +37,12 @@ public enum BoardService {
 
     }
 
+    public void remove(Integer bno) throws RuntimeException{
+
+        BoardDAO.INSTANCE.delete(bno);
+
+    }
+
 }
 
 

@@ -1,0 +1,69 @@
+package org.zerock.bitboard.controller;
+
+import lombok.extern.log4j.Log4j2;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.*;
+import java.util.Collection;
+
+@Log4j2
+@WebServlet(name="upload", value="/upload")
+@MultipartConfig(fileSizeThreshold =  1024*1024)
+public class UploadController extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.getRequestDispatcher("WEB-INF/upload.jsp").forward(req,resp);
+
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String uploadFolder = "C:\\upload";
+        byte[] buffer = new byte[1024*8];
+
+
+        Collection<Part> parts = req.getParts();
+
+        parts.forEach(part -> {
+
+            String type = part.getContentType();
+            if(type == null){
+                //null 파일이 아니라는 것.
+                log.info("partName:" + part.getName());
+                return;
+            }
+
+            String fileName = part.getSubmittedFileName();
+
+            log.info(fileName);
+
+            try (InputStream in = part.getInputStream();
+                 OutputStream fos = new FileOutputStream(uploadFolder+ File.separator+ System.currentTimeMillis()+"_"+fileName);
+                 //중복 파일 구분을 위한 코드 추가.
+
+            ) {
+                while(true){
+                    int count = in.read(buffer);
+                    if(count == -1){ break; }
+                    fos.write(buffer, 0, count);
+                }
+            }catch(Exception e){
+
+            }
+
+            log.info("---------------------------");
+
+        });//for each
+
+    }
+}
