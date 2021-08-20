@@ -3,6 +3,7 @@ package org.zerock.bitboard.dao;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.session.SqlSession;
+import org.zerock.bitboard.dto.AttachDTO;
 import org.zerock.bitboard.dto.BoardDTO;
 import org.zerock.bitboard.dto.PageDTO;
 
@@ -19,10 +20,19 @@ public enum BoardDAO {
     public Integer insert(BoardDTO boardDTO) throws RuntimeException{
     //이제 bno를 반환할 수 있도록 리턴값을 integer로 변경
         Integer bno = null;
+
         //값 딸때는 앞에다가 먼저 선언해주고, 아래에 리턴해주는게좋다.
         try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)){
             session.insert(PREFIX+".insert", boardDTO);
             bno = boardDTO.getBno();//bno값 받아오기
+
+            List<AttachDTO> attachDTOList = boardDTO.getAttachDTOList();
+
+           for(AttachDTO attachDTO: attachDTOList){
+               attachDTO.setBno(bno);
+               session.insert(PREFIX+".insertAttach", attachDTO);
+           }
+            session.commit();
         }catch(Exception e){
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());

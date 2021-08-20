@@ -13,6 +13,11 @@
         </selectKey>
     </insert>
 
+    <insert id ="insertAttach">
+        insert into attach(bno, fname, savename,imgyn)
+        values(#{bno},#{fname},#{savename},#{imgyn})
+    </insert>
+
     <select id="select" resultType="org.zerock.bitboard.dto.BoardDTO">
 <!--select결과를 어디에 넣을지 정해야함 : resultType... -->
         select * from board where bno = #{bno}
@@ -21,6 +26,7 @@
     <select id="list" resultType="org.zerock.bitboard.dto.BoardDTO">
         select * from board where bno >0 order by bno desc limit #{skip}, #{size}
     </select>
+
 
 
     <update id="update">

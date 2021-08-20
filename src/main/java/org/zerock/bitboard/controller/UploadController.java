@@ -1,6 +1,7 @@
 package org.zerock.bitboard.controller;
 
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnails;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -45,10 +46,12 @@ public class UploadController extends HttpServlet {
 
             String fileName = part.getSubmittedFileName();
 
+            String uploadFileName = System.currentTimeMillis()+"_"+fileName;
             log.info(fileName);
 
+            //원본 파일 저장
             try (InputStream in = part.getInputStream();
-                 OutputStream fos = new FileOutputStream(uploadFolder+ File.separator+ System.currentTimeMillis()+"_"+fileName);
+                 OutputStream fos = new FileOutputStream(uploadFolder+ File.separator+ uploadFileName);
                  //중복 파일 구분을 위한 코드 추가.
 
             ) {
@@ -59,7 +62,20 @@ public class UploadController extends HttpServlet {
                 }
             }catch(Exception e){
 
+            }//원본파일저장 끝
+
+            //이미지에 대해서만 섬네일
+            if(type.startsWith("image")){
+
+                try {
+                    Thumbnails.of(new File(uploadFolder+ File.separator+ uploadFileName))
+                            .size(100, 100)
+                            .toFile(new File(uploadFolder+ File.separator+ "s_"+uploadFileName));
+                }catch(Exception e){
+
+                }
             }
+
 
             log.info("---------------------------");
 
