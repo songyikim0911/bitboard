@@ -1,7 +1,9 @@
 package org.zerock.bitboard.controller;
 
 import lombok.extern.log4j.Log4j2;
+import org.zerock.bitboard.dao.BoardDAO;
 import org.zerock.bitboard.dto.BoardDTO;
+import org.zerock.bitboard.service.BoardService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,14 +18,36 @@ public class ModifyController extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        Integer bno = Integer.parseInt(request.getParameter("bno"));
 
-
-        BoardDTO boardDTO = BoardDTO.builder()
-                .title("title")
-                .content("content")
-                .build();
+        request.setAttribute("bno", bno);
+        request.getRequestDispatcher("WEB-INF/board/modify.jsp").forward(request, response);
 
     }
+
+        @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Integer bno = Integer.parseInt(request.getParameter("bno"));
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+
+
+        BoardDTO dto = BoardDTO.builder()
+                   .bno(bno)
+                .title(title)
+                    .content(content)
+                    .build();
+
+
+            BoardService.INSTANCE.modify(dto);
+
+            request.setAttribute("boardDTO", dto);
+
+            response.sendRedirect("/board/read?bno=" + bno);
+
+
+        }
 }

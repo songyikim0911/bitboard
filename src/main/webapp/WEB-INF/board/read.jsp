@@ -21,8 +21,11 @@
     <button> 삭제 </button>
 </form>
 
-<form action = "/board/remove?bno=${boardDTO.bno}" method ="post">
-    <button> 수정 </button>
+<form action="/board/modify" method="get">
+    <div>
+        <input type="hidden" name="bno" value=${boardDTO.bno}>
+        <button type="submit">UPDATE</button>
+    </div>
 </form>
 
 </body>

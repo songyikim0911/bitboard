@@ -1,16 +1,15 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ksi64
-  Date: 2021-08-21
-  Time: 오후 12:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+<form action="/board/modify" method="post">
+    <input type="hidden" name="bno" value=${bno}>
+    <input type="text" name="title" value="제목">
+    <input type="text" name="content" value="내용">
+    <button type="submit">UPDATE</button>
+</form>
 
 </body>
 </html>
