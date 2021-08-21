@@ -36,6 +36,8 @@ public class BoardDAOTests {
         log.info("============================");
         log.info(boardDTO);
 
+        BoardDAO.INSTANCE.insert(boardDTO);
+
         //
 
     }

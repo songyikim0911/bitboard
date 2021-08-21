@@ -28,10 +28,12 @@ public enum BoardDAO {
 
             List<AttachDTO> attachDTOList = boardDTO.getAttachDTOList();
 
-           for(AttachDTO attachDTO: attachDTOList){
-               attachDTO.setBno(bno);
-               session.insert(PREFIX+".insertAttach", attachDTO);
-           }
+            if(attachDTOList != null && attachDTOList.size() > 0) {
+                for (AttachDTO attachDTO : attachDTOList) {
+                    attachDTO.setBno(bno);
+                    session.insert(PREFIX + ".insertAttach", attachDTO);
+                }
+            }
             session.commit();
         }catch(Exception e){
             log.error(e.getMessage());

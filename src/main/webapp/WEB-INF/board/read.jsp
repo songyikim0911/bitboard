@@ -12,12 +12,17 @@
 </head>
 <body>
 
-<form action = "/board/remove?bno=${pageDTO.bno}" method ="post">
+
 <div>${boardDTO}</div>
 <div>${pageDTO}</div>
 
 <a href="/board/list${pageDTO.page}&size=${pageDTO.size}">목록가기</a>
+<form action = "/board/remove?bno=${boardDTO.bno}" method ="post">
     <button> 삭제 </button>
+</form>
+
+<form action = "/board/remove?bno=${boardDTO.bno}" method ="post">
+    <button> 수정 </button>
 </form>
 
 </body>
