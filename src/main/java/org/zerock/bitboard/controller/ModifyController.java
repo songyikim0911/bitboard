@@ -22,8 +22,10 @@ public class ModifyController extends HttpServlet {
 
         Integer bno = Integer.parseInt(request.getParameter("bno"));
 
+
+
         request.setAttribute("bno", bno);
-        request.getRequestDispatcher("WEB-INF/board/modify.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/board/modify.jsp").forward(request,response);
 
     }
 
@@ -44,10 +46,8 @@ public class ModifyController extends HttpServlet {
 
             BoardService.INSTANCE.modify(dto);
 
-            request.setAttribute("boardDTO", dto);
 
             response.sendRedirect("/board/read?bno=" + bno);
-
 
         }
 }
